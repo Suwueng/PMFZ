@@ -1,0 +1,37 @@
+INTO mydb.DR17
+SELECT p.objid, p.ra, p.%*dec*), p.mjd, p.plate, p.fiberID, 
+  p.class, p.subclass, p.zWarning, p.z AS redshift,
+  p.psfMag_u, p.modelMag_u, p.cmodelMag_u,
+  p.extinction_u, p.dered_u,
+  p.psfMag_g, p.modelMag_g, p.cmodelMag_g,
+  p.extinction_g, p.dered_g,
+  p.psfMag_r, p.modelMag_r, p.cmodelMag_r,
+  p.extinction_r, p.dered_r,
+  p.psfMag_i, p.modelMag_i, p.cmodelMag_i,
+  p.extinction_i, p.dered_i,
+  p.psfMag_z, p.modelMag_z, p.cmodelMag_z,
+  p.extinction_z, p.dered_z,
+  w.w1mpro AS w1, w.w2mpro AS w2,
+  w.w3mpro AS w3, w.w4mpro AS w4
+FROM SpecPhotoAll AS p
+  JOIN wise_xmatch AS x ON x.sdss_objid = p.objID
+  JOIN wise_allsky AS w ON x.wise_cntr = w.cntr
+WHERE (p.class = 'GALAXY' OR p.class = 'STAR' 
+  OR p.class = 'QSO')
+  AND p.sciencePrimary = 1 AND p.Mode = 1
+  AND (p.zWarning = 0 OR p.zWarning = 16)
+  AND (p.flags & (dbo.fPhotoFlags('SATURATED'))) = 0
+  AND (p.flags & (dbo.fPhotoFlags('BRIGHT'))) = 0
+  AND (p.flags & (dbo.fPhotoFlags('EDGE'))) = 0
+  AND (p.flags & (dbo.fPhotoFlags('BLENDED'))) = 0
+  AND p.psfMagErr_u<=0.2 AND p.psfMagErr_g<=0.2
+  AND p.psfMagErr_r<=0.2 AND p.psfMagErr_i<=0.2
+  AND p.psfMagErr_z<=0.2
+  AND p.modelMagErr_u<=0.2 AND p.modelMagErr_g<=0.2
+  AND p.modelMagErr_r<=0.2 AND p.modelMagErr_i<=0.2
+  AND p.modelMagErr_z<=0.2
+  AND p.cmodelMagErr_u<=0.2 AND p.cmodelMagErr_g<=0.2
+  AND p.cmodelMagErr_r<=0.2 AND p.cmodelMagErr_i<=0.2
+  AND p.cmodelMagErr_z<=0.2
+  AND w.w1snr >= 3 AND w.w2snr >= 3
+  AND w.w1sigmpro <= 0.3 AND w.w2sigmpro <= 0.3
