@@ -110,7 +110,7 @@ for fold, (train_index, val_index) in enumerate(kf.split(X_train_scaled)):
 
 # Finally evaluate the best model on the test set
 test_loss = best_model.evaluate(X_test_scaled, y_test)
-print("最终测试集损失:", test_loss)
+print("Final test set loss:", test_loss)
 
 from sklearn.preprocessing import StandardScaler
 
@@ -151,7 +151,7 @@ for i in range(num_batches):
 z_pred_all = np.array(z_pred_all)
 
 # Print the results
-print("预测的红移:", z_pred_all)
+print("The prediction of redshift:", z_pred_all)
 
 def save_redshift_to_csv(z_pred, file_path):
     """
