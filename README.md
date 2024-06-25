@@ -1,0 +1,4 @@
+PMFZ: Photometric Classification Using Multi-model Fusion Method with Redshift Estimation
+
+# Brief introduction
+This project aims to achieve a fine-grained classification of all photometric astronomical sources. Based on the traditional three-class classification (stars/quasars/galaxies), it further divides galaxies into normal galaxies and emission-line galaxies (four-class classification), and finally divides emission-line galaxies into AGN, starburst galaxies, broad-line galaxies, and star-forming galaxies (seven-class classification). We propose a method called multi-model fusion, where the idea is to mix the redshift estimation model into the classification model. The redshift estimation model extracts the high-level feature, redshift, to assist the implementation of classification. The detailed content and experimental results can be found in the paper.
